@@ -3,7 +3,7 @@ import { Product } from '../stofrunt-product-list/stofrunt-product-list';
 
 @Component({
   tag: 'stofrunt-product-item',
-  shadow: true,
+  shadow: false,
 })
 export class StofruntProductItem {
 
@@ -13,8 +13,11 @@ export class StofruntProductItem {
 
   render() {
     return (
-      <Host>
-        <li onClick={_ev => this.addProductToCart.emit(this.product)}>{this.product?.title}</li>
+      <Host class="c-table__row">
+        <span class="c-table__cell">{this.product?.title}</span>
+        <span class="c-table__cell">{this.product?.description}</span>
+        <span class="c-table__cell">{this.product?.price}</span>
+        <span class="c-table__cell"><button class="c-button" onClick={_ev => this.addProductToCart.emit(this.product)}>Add to cart</button></span>
       </Host>
     );
   }

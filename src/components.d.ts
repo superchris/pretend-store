@@ -16,6 +16,12 @@ export namespace Components {
     }
     interface AppRoot {
     }
+    interface ProductPage {
+        "match": MatchResults;
+    }
+    interface StofruntCartItem {
+        "cartItem": any;
+    }
     interface StofruntProductItem {
         "product": Product;
     }
@@ -42,6 +48,18 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLProductPageElement extends Components.ProductPage, HTMLStencilElement {
+    }
+    var HTMLProductPageElement: {
+        prototype: HTMLProductPageElement;
+        new (): HTMLProductPageElement;
+    };
+    interface HTMLStofruntCartItemElement extends Components.StofruntCartItem, HTMLStencilElement {
+    }
+    var HTMLStofruntCartItemElement: {
+        prototype: HTMLStofruntCartItemElement;
+        new (): HTMLStofruntCartItemElement;
+    };
     interface HTMLStofruntProductItemElement extends Components.StofruntProductItem, HTMLStencilElement {
     }
     var HTMLStofruntProductItemElement: {
@@ -58,6 +76,8 @@ declare global {
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
+        "product-page": HTMLProductPageElement;
+        "stofrunt-cart-item": HTMLStofruntCartItemElement;
         "stofrunt-product-item": HTMLStofruntProductItemElement;
         "stofrunt-product-list": HTMLStofruntProductListElement;
     }
@@ -70,6 +90,12 @@ declare namespace LocalJSX {
     }
     interface AppRoot {
     }
+    interface ProductPage {
+        "match"?: MatchResults;
+    }
+    interface StofruntCartItem {
+        "cartItem"?: any;
+    }
     interface StofruntProductItem {
         "onAddProductToCart"?: (event: CustomEvent<Product>) => void;
         "product"?: Product;
@@ -81,6 +107,8 @@ declare namespace LocalJSX {
         "app-home": AppHome;
         "app-profile": AppProfile;
         "app-root": AppRoot;
+        "product-page": ProductPage;
+        "stofrunt-cart-item": StofruntCartItem;
         "stofrunt-product-item": StofruntProductItem;
         "stofrunt-product-list": StofruntProductList;
     }
@@ -92,6 +120,8 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "product-page": LocalJSX.ProductPage & JSXBase.HTMLAttributes<HTMLProductPageElement>;
+            "stofrunt-cart-item": LocalJSX.StofruntCartItem & JSXBase.HTMLAttributes<HTMLStofruntCartItemElement>;
             "stofrunt-product-item": LocalJSX.StofruntProductItem & JSXBase.HTMLAttributes<HTMLStofruntProductItemElement>;
             "stofrunt-product-list": LocalJSX.StofruntProductList & JSXBase.HTMLAttributes<HTMLStofruntProductListElement>;
         }
