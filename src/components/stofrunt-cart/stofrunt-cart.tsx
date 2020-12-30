@@ -8,15 +8,35 @@ export class StofruntCart extends contextConsumerMixin(LitElement) {
     return this['context'].cart;
   }
 
+  get total() {
+    return this['context'].cart.reduce((acc, item) => acc + parseInt(item.price), 0)
+  }
+
+  publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+
   render() {
-    return html`<div class="c-table c-table--striped">
+    return html`
+    <div class="c-table c-table--striped">
       <div class="c-table__caption">Cart</div>
       <div class="c-table__row c-table__row--heading">
         <span class="c-table__cell">Item</span>
         <span class="c-table__cell">Price</span>
       </div>
       ${this.cart && this.cart.map((item) => html`<stofrunt-cart-item .cartItem=${item}></stofrunt-cart-item>`)}
-    </div>`;
+      <div class="c-table__row c-table__row--footer">Total: ${this.total}</div>
+    </div>
+    ${this.total > 0 ? html`
+    <stripe-payment-request
+        publishable-key="${this.publishableKey}"
+        generate="token"
+        amount="${this.total}"
+        label="Foo"
+        country="US"
+        currency="usd">
+      ${this.cart && this.cart.map((item) => html`<stripe-display-item data-amount="${item.price}" data-label="${item.title}"></stripe-display-item>`)}
+    </stripe-payment-request>` : ''}
+
+    `;
   }
 
   onContextChanged() {

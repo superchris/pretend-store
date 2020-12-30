@@ -20,6 +20,8 @@ export class ProductPage {
         <style>
           {css}
         </style>
+        <script type="module" src="https://unpkg.com/@power-elements/stripe-elements/stripe-elements.js?module"></script>
+        <script type="module" src="https://unpkg.com/@power-elements/stripe-elements/stripe-payment-request.js?module"></script>
         <stofrunt-context>
           <div class="o-grid">
             <div class="o-grid__cell--width-65">
