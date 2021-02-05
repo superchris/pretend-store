@@ -33,15 +33,24 @@ export class StofruntProductList {
 
   @State() cart: Product[];
 
+  @State() totalPages: number;
+
+  @State() pageNumber: number;
+
   componentWillLoad() {
-    this.channel = subscribeState(socket, "product_list:all", ({ cart, products }) => {
-      console.log(cart, products);
+    this.channel = subscribeState(socket, "product_list:all", ({ cart, products, total_pages, page_number }) => {
       this.products = products;
       this.cart = cart;
+      this.pageNumber = page_number;
+      this.totalPages = total_pages;
     })
   }
 
   addProductToCart(event: CustomEvent<Product>) {
+    pushEvent(this.channel, event);
+  }
+
+  pageChange(event: CustomEvent<number>) {
     pushEvent(this.channel, event);
   }
 
@@ -61,6 +70,7 @@ export class StofruntProductList {
           </div>
           {this.products && this.products?.map(product => <stofrunt-product-item onAddProductToCart={(ev) => this.addProductToCart(ev)} product={product}></stofrunt-product-item>)}
         </div>
+        <blaze-pagination page={this.pageNumber} pages={this.totalPages} onChanged={(ev) => this.pageChange(ev)}></blaze-pagination>
         <ul>
           {this.cart && this.cart?.map(product => <li>{product.title}</li>)}
         </ul>
