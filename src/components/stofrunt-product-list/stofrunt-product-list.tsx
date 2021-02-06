@@ -18,7 +18,7 @@ const subscribeState = (socket, channelName, onStateChange) => {
   return channel;
 }
 
-const pushEvent = (channel, event: CustomEvent) => channel.push(event.type, event.detail);
+const pushEvent = (channel, event: CustomEvent) => channel.push(`lvs_evt:${event.type}`, event.detail);
 
 @Component({
   tag: 'stofrunt-product-list',
