@@ -28,7 +28,7 @@ export class StofruntCart extends contextConsumerMixin(LitElement) {
     ${this.total > 0 ? html`
     <stripe-payment-request
         publishable-key="${this.publishableKey}"
-        generate="token"
+        generate="paymentmethod"
         amount="${this.total}"
         label="Foo"
         country="US"

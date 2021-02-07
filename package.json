@@ -27,7 +27,7 @@
     "@blaze/css": "^9.2.0",
     "@kuscamara/context-provider": "file:../context-provider",
     "@open-wc/lit-helpers": "^0.3.11",
-    "@power-elements/stripe-elements": "^2.3.7",
+    "@power-elements/stripe-elements": "file:../stripe-elements",
     "@types/phoenix": "^1.5.1",
     "@types/stripe-v3": "^3.1.23",
     "@webcomponents/webcomponentsjs": "^2.5.0",

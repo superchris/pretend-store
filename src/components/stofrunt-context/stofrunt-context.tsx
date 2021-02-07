@@ -13,6 +13,13 @@ export class StofruntContext extends ContextProvider {
     this.addEventListener('addProductToCart', (e) => {
       pushEvent(this.channel, e as CustomEvent);
     }, true);
+    this.addEventListener('success', (e: CustomEvent) => {
+      console.log(e);
+      e.detail.complete();
+    }, true);
+    this.addEventListener('paymentmethod', (e) => {
+      console.log(e);
+    }, true);
   }
 
   createRenderRoot() {
