@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
 import { Channel } from 'phoenix';
 import socket from '../../socket';
 import css from '@blaze/css/dist/blaze/blaze.css'
+import { subscribeState, pushEvent } from '../../live_state';
 
 export interface Product {
   title: string;
@@ -10,15 +11,6 @@ export interface Product {
   description: string;
   // imageUrl: string;
 }
-
-const subscribeState = (socket, channelName, onStateChange) => {
-  const channel = socket.channel(channelName, {});
-  channel.join().receive("ok", () => console.log('joined'));
-  channel.on("state:change", (state) => onStateChange(state));
-  return channel;
-}
-
-const pushEvent = (channel, event: CustomEvent) => channel.push(`lvs_evt:${event.type}`, event.detail);
 
 @Component({
   tag: 'stofrunt-product-list',
