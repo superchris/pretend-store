@@ -1,8 +1,5 @@
-export const subscribeState = (socket, channelName, onStateChange) => {
-  const channel = socket.channel(channelName, {});
-  channel.join().receive("ok", () => console.log('joined'));
-  channel.on("state:change", (state) => onStateChange(state));
-  return channel;
-}
+import LiveState from 'live-state';
 
-export const pushEvent = (channel, event: CustomEvent) => channel.push(`lvs_evt:${event.type}`, event.detail);
+const liveState = new LiveState("ws://localhost:4000/socket", "product_list:all");
+
+export default liveState;

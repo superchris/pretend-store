@@ -32,6 +32,7 @@
     "@types/stripe-v3": "^3.1.23",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "lit-element": "^2.4.0",
-    "phoenix": "^1.5.7"
+    "phoenix": "^1.5.7",
+    "live-state": "file:/../live-state"
   }
 }

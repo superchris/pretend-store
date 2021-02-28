@@ -1,8 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import { Channel } from 'phoenix';
-import socket from '../../socket';
-import css from '@blaze/css/dist/blaze/blaze.css'
-import { subscribeState, pushEvent } from '../../live_state';
+import { Channel, Socket } from 'phoenix';
+import liveState from '../../live_state';
+import "../stofrunt-cart/stofrunt-cart";
 
 export interface Product {
   title: string;
@@ -19,39 +18,33 @@ export interface Product {
 })
 export class StofruntProductList {
 
-  @Prop() products: Product[];
-
-  @State() channel: Channel;
-
-  @State() cart: Product[];
+  @State() products: Product[];
 
   @State() totalPages: number;
 
   @State() pageNumber: number;
 
+  @State() channel: Channel;
+
   componentWillLoad() {
-    this.channel = subscribeState(socket, "product_list:all", ({ cart, products, total_pages, page_number }) => {
+    liveState.subscribe(({ products, total_pages, page_number }) => {
       this.products = products;
-      this.cart = cart;
       this.pageNumber = page_number;
       this.totalPages = total_pages;
     })
   }
 
   addProductToCart(event: CustomEvent<Product>) {
-    pushEvent(this.channel, event);
+    liveState.pushEvent(event);
   }
 
   pageChange(event: CustomEvent<number>) {
-    pushEvent(this.channel, event);
+    liveState.pushEvent(event);
   }
 
   render() {
     return (
       <Host>
-        <style>
-          {css}
-        </style>
         <div class="c-table c-table--striped">
           <div class="c-table__caption">Products</div>
           <div class="c-table__row c-table__row--heading">
@@ -63,9 +56,6 @@ export class StofruntProductList {
           {this.products && this.products?.map(product => <stofrunt-product-item onAddProductToCart={(ev) => this.addProductToCart(ev)} product={product}></stofrunt-product-item>)}
         </div>
         <blaze-pagination page={this.pageNumber} pages={this.totalPages} onChanged={(ev) => this.pageChange(ev)}></blaze-pagination>
-        <ul>
-          {this.cart && this.cart?.map(product => <li>{product.title}</li>)}
-        </ul>
       </Host>
     );
   }

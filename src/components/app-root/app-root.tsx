@@ -10,7 +10,7 @@ export class AppRoot {
     return (
       <div>
         <header>
-          <h1>Stencil App Starter</h1>
+          <h1>Pretend Store</h1>
         </header>
 
         <main>
@@ -18,6 +18,7 @@ export class AppRoot {
             <stencil-route-switch scrollTopOffset={0}>
               <stencil-route url="/" component="app-home" exact={true} />
               <stencil-route url="/profile/:name" component="app-profile" />
+              <stencil-route url="/products" component="products-page" />
               <stencil-route url="/products/:productId" component="product-page" />
             </stencil-route-switch>
           </stencil-router>

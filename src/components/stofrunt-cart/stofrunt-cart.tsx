@@ -1,18 +1,29 @@
-import { LitElement, html } from 'lit-element';
-import { contextConsumerMixin } from '@kuscamara/context-provider';
-import { StofruntCartItem } from '../stofrunt-cart-item/stofrunt-cart-item';
+import { LitElement, html, property } from 'lit-element';
+import liveState from '../../live_state';
+import formatPrice from '../../formatPrice';
 
-export class StofruntCart extends contextConsumerMixin(LitElement) {
+interface CartItem {
+  title: string;
+  price: number;
+}
 
-  get cart() {
-    return this['context'].cart;
-  }
+export class StofruntCart extends LitElement {
+
+  @property()
+  cart: Array<CartItem> = [];
 
   get total() {
-    return this['context'].cart.reduce((acc, item) => acc + parseInt(item.price), 0)
+    return this.cart.reduce((acc, cartItem) => acc + cartItem.price, 0)
   }
 
   publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+
+  connectedCallback() {
+    super.connectedCallback();
+    liveState.subscribe(({ cart }) => {
+      this.cart = cart;
+    })
+  }
 
   render() {
     return html`
@@ -23,24 +34,9 @@ export class StofruntCart extends contextConsumerMixin(LitElement) {
         <span class="c-table__cell">Price</span>
       </div>
       ${this.cart && this.cart.map((item) => html`<stofrunt-cart-item .cartItem=${item}></stofrunt-cart-item>`)}
-      <div class="c-table__row c-table__row--footer">Total: ${this.total}</div>
+      <div class="c-table__row c-table__row--footer">Total: ${formatPrice(this.total)}</div>
     </div>
-    ${this.total > 0 ? html`
-    <stripe-payment-request
-        publishable-key="${this.publishableKey}"
-        generate="paymentmethod"
-        amount="${this.total}"
-        label="Foo"
-        country="US"
-        currency="usd">
-      ${this.cart && this.cart.map((item) => html`<stripe-display-item data-amount="${item.price}" data-label="${item.title}"></stripe-display-item>`)}
-    </stripe-payment-request>` : ''}
-
     `;
-  }
-
-  onContextChanged() {
-    ((this as unknown) as LitElement).requestUpdate();
   }
 
   createRenderRoot() {

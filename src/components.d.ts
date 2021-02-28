@@ -7,7 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { MatchResults } from "@stencil/router";
 import { Product } from "./components/stofrunt-product-list/stofrunt-product-list";
-import { Product as Product1 } from "./components/stofrunt-product-list/stofrunt-product-list";
 export namespace Components {
     interface AppHome {
     }
@@ -19,6 +18,8 @@ export namespace Components {
     interface ProductPage {
         "match": MatchResults;
     }
+    interface ProductsPage {
+    }
     interface StofruntCartItem {
         "cartItem": any;
     }
@@ -26,7 +27,6 @@ export namespace Components {
         "product": Product;
     }
     interface StofruntProductList {
-        "products": Product[];
     }
 }
 declare global {
@@ -54,6 +54,12 @@ declare global {
         prototype: HTMLProductPageElement;
         new (): HTMLProductPageElement;
     };
+    interface HTMLProductsPageElement extends Components.ProductsPage, HTMLStencilElement {
+    }
+    var HTMLProductsPageElement: {
+        prototype: HTMLProductsPageElement;
+        new (): HTMLProductsPageElement;
+    };
     interface HTMLStofruntCartItemElement extends Components.StofruntCartItem, HTMLStencilElement {
     }
     var HTMLStofruntCartItemElement: {
@@ -77,6 +83,7 @@ declare global {
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
         "product-page": HTMLProductPageElement;
+        "products-page": HTMLProductsPageElement;
         "stofrunt-cart-item": HTMLStofruntCartItemElement;
         "stofrunt-product-item": HTMLStofruntProductItemElement;
         "stofrunt-product-list": HTMLStofruntProductListElement;
@@ -93,6 +100,8 @@ declare namespace LocalJSX {
     interface ProductPage {
         "match"?: MatchResults;
     }
+    interface ProductsPage {
+    }
     interface StofruntCartItem {
         "cartItem"?: any;
     }
@@ -101,13 +110,13 @@ declare namespace LocalJSX {
         "product"?: Product;
     }
     interface StofruntProductList {
-        "products"?: Product[];
     }
     interface IntrinsicElements {
         "app-home": AppHome;
         "app-profile": AppProfile;
         "app-root": AppRoot;
         "product-page": ProductPage;
+        "products-page": ProductsPage;
         "stofrunt-cart-item": StofruntCartItem;
         "stofrunt-product-item": StofruntProductItem;
         "stofrunt-product-list": StofruntProductList;
@@ -121,6 +130,7 @@ declare module "@stencil/core" {
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "product-page": LocalJSX.ProductPage & JSXBase.HTMLAttributes<HTMLProductPageElement>;
+            "products-page": LocalJSX.ProductsPage & JSXBase.HTMLAttributes<HTMLProductsPageElement>;
             "stofrunt-cart-item": LocalJSX.StofruntCartItem & JSXBase.HTMLAttributes<HTMLStofruntCartItemElement>;
             "stofrunt-product-item": LocalJSX.StofruntProductItem & JSXBase.HTMLAttributes<HTMLStofruntProductItemElement>;
             "stofrunt-product-list": LocalJSX.StofruntProductList & JSXBase.HTMLAttributes<HTMLStofruntProductListElement>;

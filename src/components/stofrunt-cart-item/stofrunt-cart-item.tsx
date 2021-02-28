@@ -1,4 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
+import formatPrice from '../../formatPrice';
+
 
 @Component({
   tag: 'stofrunt-cart-item',
@@ -12,7 +14,7 @@ export class StofruntCartItem {
     return (
       <Host class="c-table__row">
         <span class="c-table__cell">{this.cartItem.title}</span>
-        <span class="c-table__cell">${this.cartItem.price}</span>
+        <span class="c-table__cell">{formatPrice(this.cartItem.price)}</span>
       </Host>
     );
   }
